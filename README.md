@@ -2,8 +2,6 @@
 
 <div align="center">
 
-![Abbotsford Banner](https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6)
-
 **An intelligent conversational AI platform for coffee business lead generation, customer support, and CRM management**
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
