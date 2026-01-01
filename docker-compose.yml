@@ -1,0 +1,51 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      # MongoDB connection
+      - MONGODB_URL=${MONGODB_URL}
+      
+      # OpenAI API
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      
+      # HeyGen API
+      - HEYGEN_API_KEY=${HEYGEN_API_KEY}
+      
+      # JWT Secret
+      - JWT_SECRET=${JWT_SECRET}
+      
+      # App settings
+      - DEBUG=false
+      - FRONTEND_URL=http://localhost:8000
+      
+    volumes:
+      # Mount data directory for persistence (RAG index, etc.)
+      - ./backend/app/data:/app/app/data
+      
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/api/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # Optional: MongoDB service (if not using cloud MongoDB)
+  # mongodb:
+  #   image: mongo:7
+  #   ports:
+  #     - "27017:27017"
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=admin
+  #     - MONGO_INITDB_ROOT_PASSWORD=password
+  #   volumes:
+  #     - mongodb_data:/data/db
+  #   restart: unless-stopped
+
+# volumes:
+#   mongodb_data:

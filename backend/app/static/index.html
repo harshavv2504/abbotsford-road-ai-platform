@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Abbotsford Road Coffee</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* --- Main Background --- */
+      .bg-main-dark {
+        background-color: #121a23; /* A dark slate, from the original gradient */
+      }
+
+      /* --- Chat Bubble Animation --- */
+      @keyframes slide-up-fade-in {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .chat-bubble-animate-in {
+        animation: slide-up-fade-in 0.4s ease-out forwards;
+      }
+
+      /* --- Modal Animation --- */
+      @keyframes fade-in {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+      @keyframes modal-slide-up {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .modal-overlay-animate-in {
+        animation: fade-in 0.3s ease-out forwards;
+      }
+      .modal-content-animate-in {
+        animation: modal-slide-up 0.4s ease-out forwards;
+      }
+
+      /* --- Homepage Card Animation --- */
+      .home-card-enter {
+        animation: modal-slide-up 0.5s ease-out forwards;
+        opacity: 0;
+      }
+
+      /* --- CRM Kanban Board --- */
+      .kanban-board {
+        display: flex;
+        gap: 1.5rem; /* Increased gap for more spacing */
+        padding: 1.5rem; /* Increased padding around the board */
+        overflow-x: auto;
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+      }
+      .kanban-board::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera */
+      }
+      .kanban-column {
+        flex: 1 1 300px; /* Allow growing and shrinking from a 300px basis */
+        min-width: 300px; /* Ensure readability */
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 1rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .kanban-column.kanban-column-drag-over {
+        background: rgba(255, 255, 255, 0.25);
+        border: 2px solid #60a5fa; /* Tailwind blue-400 */
+      }
+      .kanban-card {
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.15);
+        border-radius: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease-in-out;
+        cursor: grab;
+      }
+      .kanban-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        background: rgba(255, 255, 255, 0.2);
+      }
+      @keyframes card-fade-in {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+      .kanban-card-animate-in {
+        animation: card-fade-in 0.5s ease-out forwards;
+      }
+      
+      /* --- Lead Details Modal --- */
+      .lead-details-modal .priority-tag {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 9999px;
+        font-weight: 500;
+        font-size: 0.875rem;
+      }
+      .lead-details-modal .priority-low { background-color: #d1fae5; color: #065f46; } /* Tailwind green-100/green-800 */
+      .lead-details-modal .priority-medium { background-color: #fef3c7; color: #92400e; } /* Tailwind amber-100/amber-700 */
+      .lead-details-modal .priority-high { background-color: #fee2e2; color: #991b1b; } /* Tailwind red-100/red-800 */
+
+      /* --- Hide Scrollbar Utility --- */
+      .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+      }
+      .hide-scrollbar {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+      }
+
+      @media (max-height: 700px) {
+        .md\:max-h-\[calc\(100vh-12rem\)\] {
+          max-height: calc(100vh - 8rem) !important;
+        }
+      }
+
+      @media (max-height: 600px) {
+        .md\:max-h-\[calc\(100vh-12rem\)\] {
+          max-height: calc(100vh - 6rem) !important;
+        }
+      }
+
+      @media (min-width: 768px) and (max-height: 800px) {
+        .md\:aspect-\[16\/9\] {
+          aspect-ratio: auto !important;
+          height: calc(100vh - 12rem) !important;
+        }
+      }
+
+      .chatbot-controls {
+        bottom: 1.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .chatbot-controls {
+          bottom: 2rem;
+        }
+      }
+
+      @media (max-height: 700px) {
+        .chatbot-controls {
+          bottom: 1rem;
+        }
+      }
+
+      @media (max-height: 600px) {
+        .chatbot-controls {
+          bottom: 0.75rem;
+        }
+        .chatbot-controls button {
+          padding: 0.375rem 1rem;
+          font-size: 0.875rem;
+        }
+      }
+
+      @media (max-height: 500px) {
+        .chatbot-controls {
+          bottom: 0.5rem;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .md\:max-w-7xl {
+          max-width: 95vw !important;
+        }
+      }
+
+      @media (max-width: 768px) {
+        header {
+          top: 0.5rem !important;
+          left: 0.5rem !important;
+          right: 0.5rem !important;
+        }
+      }
+
+      @media (max-height: 500px) {
+        .md\:p-4 {
+          padding: 0.5rem !important;
+        }
+        header {
+          top: 0.25rem !important;
+        }
+        .md\:pt-20 {
+          padding-top: 3.5rem !important;
+        }
+        .md\:pb-28 {
+          padding-bottom: 4rem !important;
+        }
+      }
+
+      @media (max-height: 700px) {
+        .pt-20 {
+          padding-top: 4rem !important;
+        }
+        .pb-24 {
+          padding-bottom: 4.5rem !important;
+        }
+      }
+
+      @media (max-width: 767px) {
+        .pt-20 {
+          padding-top: 0 !important;
+        }
+        .pb-24 {
+          padding-bottom: 0 !important;
+        }
+      }
+
+      @media (min-width: 768px) {
+        .md\:max-h-\[calc\(100vh-12rem\)\] {
+          max-height: calc(100vh - 12rem) !important;
+        }
+      }
+    </style>
+
+<link rel="stylesheet" href="/index.css">
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.22.0"
+  }
+}
+</script>
+  <script type="module" crossorigin src="/assets/index-BDEbbok1.js"></script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

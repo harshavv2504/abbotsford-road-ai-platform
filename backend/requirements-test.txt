@@ -1,0 +1,17 @@
+# Testing Requirements for Outbound Services
+
+# Core testing framework
+pytest==7.4.3
+pytest-asyncio==0.21.1
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+
+# Test utilities
+faker==20.1.0  # Generate fake data for tests
+freezegun==1.4.0  # Mock datetime for time-based tests
+responses==0.24.1  # Mock HTTP requests
+
+# Code quality
+black==23.12.1  # Code formatter
+flake8==7.0.0  # Linter
+mypy==1.7.1  # Type checker

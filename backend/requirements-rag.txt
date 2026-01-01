@@ -1,0 +1,5 @@
+# RAG dependencies (heavy - ~500MB+)
+# Only install if you need local embeddings and vector search
+
+fastembed
+faiss-cpu

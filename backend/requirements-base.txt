@@ -1,0 +1,31 @@
+# Core dependencies (lightweight, always needed)
+
+# FastAPI and server
+fastapi
+uvicorn[standard]
+python-multipart
+
+# Database
+motor
+pymongo
+
+# Authentication
+python-jose[cryptography]
+pyjwt
+passlib[bcrypt]
+
+# Data validation
+pydantic
+pydantic-settings
+
+# LLM API
+openai
+
+# Validation
+phonenumbers
+email-validator
+
+# Utilities
+python-dotenv
+requests
+slowapi

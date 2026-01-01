@@ -1,0 +1,7 @@
+{
+  "name": "Abbotsford - AI Voice Chat",
+  "description": "A sleek, 16:9 aspect ratio chatbot that accepts both text and transcribed audio input. Engage in conversation by typing or simply speaking your mind.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
